@@ -58,7 +58,7 @@ public class MWActivity extends AppCompatActivity {
 
     }
 
-    void initWebView(MWebView webView){
+    public void initWebView(MWebView webView){
         this.webView = webView;
     }
 
@@ -82,7 +82,7 @@ public class MWActivity extends AppCompatActivity {
         initLocationSetting();
     }
 
-    final LocationListener gpsLocationListener = new LocationListener() {
+    protected  final LocationListener gpsLocationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             final double longitude = location.getLongitude();
             final double latitude = location.getLatitude();
@@ -114,7 +114,7 @@ public class MWActivity extends AppCompatActivity {
 
         }
     };
-    void initLocationSetting(){
+    public void initLocationSetting(){
         if ( Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions( MWActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  }, 0 );
         }else {
