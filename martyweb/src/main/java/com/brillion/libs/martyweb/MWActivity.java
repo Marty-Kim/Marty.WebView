@@ -1,6 +1,7 @@
 package com.brillion.libs.martyweb;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.brillion.libs.martyweb.web.MWebView;
 
@@ -28,10 +30,14 @@ public class MWActivity extends AppCompatActivity {
     protected MWebView webView;
     protected LocationManager lm;
 
+    BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        backPressCloseHandler= new BackPressCloseHandler(this);
+
 //        webView = new MWebView(this);
 //        webView.set
 
@@ -153,5 +159,49 @@ public class MWActivity extends AppCompatActivity {
             }
         }
     }
+    public class BackPressCloseHandler {
 
+        private long backKeyPressedTime = 0;
+        private Toast toast;
+        private Activity activity;
+
+        public BackPressCloseHandler(Activity context) {
+            this.activity = context;
+        }
+
+        public void onBackPressed() {
+            if (Manager.isdoubleClickAppExit){
+                if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+                    backKeyPressedTime = System.currentTimeMillis();
+                    showGuide();
+                    return;
+                }
+                if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                    activity.finish();
+                    toast.cancel();
+                }
+            }else{
+                activity.finish();
+            }
+
+        }
+
+        public void showGuide() {
+            toast = Toast.makeText(activity, Manager.doubleClick_appExit_string, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack())
+            webView.goBack();
+        else{
+            Log.d("URL " ,webView.getUrl());
+            if (webView.getUrl().equals(Manager.doubleClick_execute_url))
+                backPressCloseHandler.onBackPressed();
+        }
+    }
 }
