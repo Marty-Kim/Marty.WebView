@@ -40,7 +40,7 @@ import static com.brillion.libs.martyweb.Manager.iswideViewPort;
 
 public class MWActivity extends AppCompatActivity {
     protected int disable_flag = 0;
-    protected MWebView webView;
+    protected WebView webView;
     protected LocationManager lm;
 
     BackPressCloseHandler backPressCloseHandler;
@@ -71,12 +71,12 @@ public class MWActivity extends AppCompatActivity {
 
     }
 
-    public void initWebView(MWebView webView){
-        this.webView = webView;
+    public void initWebView(WebView webView){
+
     }
 
     protected void init(OnAlertListener alertListener,WebView webView){
-
+        this.webView = webView;
         WebSettings settings = webView.getSettings();
         settings.setUseWideViewPort(iswideViewPort);
         settings.setDomStorageEnabled(isdomStorage);

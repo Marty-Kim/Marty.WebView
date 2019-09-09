@@ -22,19 +22,23 @@ public class Bridge {
 
     @JavascriptInterface
     public void Call(String number){
+        Activity.Call(number);
 
     }
     @JavascriptInterface
-    public void Blank(String number){
+    public void Blank(String link){
+        Activity.Blank(link);
 
     }
 
     @JavascriptInterface
-    public void download(String number){
+    public void download(String link){
+        Activity.download(link);
 
     }
     @JavascriptInterface
     public void getLocationInfo(){
+        Activity.getLocationInfo();
 
     }
 
