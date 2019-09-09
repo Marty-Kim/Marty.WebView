@@ -88,6 +88,7 @@ public class MWActivity extends AppCompatActivity {
         webView.setWebChromeClient(new MChromClient(this,alertListener));
         webView.setWebViewClient(new MWebClient());
         webView.addJavascriptInterface(new Bridge(this),Manager.bridge_name);
+        webView.loadUrl(Manager.base_url);
 
 
     }
