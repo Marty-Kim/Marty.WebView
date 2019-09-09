@@ -20,10 +20,23 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.brillion.libs.martyweb.interfaces.Bridge;
+import com.brillion.libs.martyweb.interfaces.OnAlertListener;
+import com.brillion.libs.martyweb.web.MChromClient;
+import com.brillion.libs.martyweb.web.MWebClient;
 import com.brillion.libs.martyweb.web.MWebView;
+
+import static com.brillion.libs.martyweb.Manager.isbuiltInZoomControls;
+import static com.brillion.libs.martyweb.Manager.isdisplayZoomControls;
+import static com.brillion.libs.martyweb.Manager.isdomStorage;
+import static com.brillion.libs.martyweb.Manager.isjavaScriptEnabled;
+import static com.brillion.libs.martyweb.Manager.issupportZoom;
+import static com.brillion.libs.martyweb.Manager.iswideViewPort;
 
 public class MWActivity extends AppCompatActivity {
     protected int disable_flag = 0;
@@ -60,6 +73,23 @@ public class MWActivity extends AppCompatActivity {
 
     public void initWebView(MWebView webView){
         this.webView = webView;
+    }
+
+    protected void init(OnAlertListener alertListener,WebView webView){
+
+        WebSettings settings = webView.getSettings();
+        settings.setUseWideViewPort(iswideViewPort);
+        settings.setDomStorageEnabled(isdomStorage);
+        settings.setJavaScriptEnabled(isjavaScriptEnabled);
+        settings.setBuiltInZoomControls(isbuiltInZoomControls);
+        settings.setDisplayZoomControls(isdisplayZoomControls);
+        settings.setSupportZoom(issupportZoom);
+
+        webView.setWebChromeClient(new MChromClient(this,alertListener));
+        webView.setWebViewClient(new MWebClient());
+        webView.addJavascriptInterface(new Bridge(this),Manager.bridge_name);
+
+
     }
 
     public void Call(String number){
