@@ -30,7 +30,7 @@ public class MChromClient extends WebChromeClient {
     }
 
     @Override
-    public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+    public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
         if (isalert){
             result.cancel();
             if (iscustomAlert){
@@ -43,6 +43,7 @@ public class MChromClient extends WebChromeClient {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 onCustomAlert.onDefaultAlertConfirmCallback();
+                                result.confirm();
                                 dialog.dismiss();
                             }
                         })
