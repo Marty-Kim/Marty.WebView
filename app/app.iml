@@ -90,5 +90,7 @@
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="martyweb" />
+    <orderEntry type="module" module-name="martyweb" />
+    <orderEntry type="module" module-name="martyweb" />
   </component>
 </module>
